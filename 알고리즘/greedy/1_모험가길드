@@ -1,0 +1,16 @@
+# Greedy 알고리즘
+
+# 모험가 길드: N명의 사람들 중 공포도 x인 사람은 최소 x명 이상 같이 가야할 때, 만들 수 있는 최대 그룹수는?
+
+def solution(guild):
+
+    count = 0
+    result = 0
+    
+    for i in guild:
+        count += 1
+        if count >= i:
+            result += 1
+            count = 0
+
+    return result    
