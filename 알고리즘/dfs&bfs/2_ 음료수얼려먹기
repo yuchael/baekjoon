@@ -1,0 +1,21 @@
+# DFS
+def dfs(now, graph, visited):
+    visited[now] = True
+
+    for nxt in graph[now]:
+        if not visited[nxt]:
+            dfs(nxt, graph, visited)
+
+
+# 음료수 얼려 먹기: N x M 얼음 틀에서 생성되는 아이스크림 개수 구하기
+
+def solution(n, m, graph):
+    count = 0
+
+    for x in range(n):
+        for y in range(m):
+            if graph[x][y] == 0:
+                graph[x][y] = 1
+                dfs(n, m, x, y, graph)
+                count += 1
+    return count
