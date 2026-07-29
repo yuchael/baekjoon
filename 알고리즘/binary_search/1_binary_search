@@ -1,0 +1,66 @@
+# binary search
+
+def binary_search(target, arr):
+    arr.sort()
+    s, e = 0, len(arr) - 1
+
+    while s <= f:
+        mid = (s + e) // 2
+        
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            s = mid + 1
+        else:
+            e = mid - 1
+
+    return -1
+
+# 이진탐색 라이브러리
+
+from bisect import bisect_left, bisect_right
+
+arr = [1, 2, 4, 4, 8]
+x = 4
+
+ans1 = bisect_left(arr, x) # 정렬된 순서를 유지하면서 배열 arr에 x를 삽입할 가장 왼쪽 인덱스 반환
+ans2 = bisect_right(arr, x) # 정렬된 순서를 유지하면서 배열 arr에 x를 삽입할 가장 오른쪽 인덱스 반환
+
+# ans1 = 2, ans2 = 4
+
+# 떡볶이 떡 만들기: 높이 H로 떡 자를 때, 손님이 요청한 길이 M 이상의 떡을 얻기 위해 설정할 수 있는 H 최댓값
+# 19, 14, 10, 17cm 떡이 있을 때 H가 15라면 4, 0, 0, 2cm로 총 6cm 가져감
+
+def solution(M, rice_cake):
+    rice_cake.sort()
+
+    start, end = 0, rice_cake[-1]
+    ans = 0
+
+    while start <= end:
+        mid = (start + end) // 2
+        
+        remain = 0
+        for i in rice_cake:
+            if i > mid:
+                remain += (i - mid)
+
+        if remain < M:
+            end = mid - 1
+        else:
+            ans = mid
+            start = mid + 1
+
+    return ans
+
+# 정렬된 배열에서 특정 수의 개수 구하기: N 개의 원소를 포함하고 있는 오름차순 수열에서 x가 등장하는 횟수 구하기
+# {1, 1, 2, 2, 2, 2, 3}, x = 2일 때 답은 4
+
+from bisect import bisect_left, bisect_right
+def solution(x, arr):
+    result = bisect_right(arr, x) - bisect_left(arr, x)
+
+    if result == 0:
+        result = -1
+    
+    return result
