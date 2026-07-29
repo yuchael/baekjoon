@@ -1,0 +1,23 @@
+# 구현/시뮬레이션
+
+# 상하좌우: 격자 판에서 어떻게 움직일지 주어졌을 때, 이동 후 최종 위치 출력
+
+def solution(n, plans):
+
+    position = [1, 1]
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+    move_direction = ['L', 'R', 'U', 'D']
+
+    for direction in plans:
+        for i in range(len(move_direction)):
+            if direction == move_direction[i]:
+                nx= position[0] + dx[i]
+                ny = position[1] + dy[i]
+                break
+                
+        if 1 <= nx <= n and 1 <= ny <= n:
+            position[0] = nx
+            position[1] = ny
+
+    print(position)
