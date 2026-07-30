@@ -1,0 +1,63 @@
+# shortest path
+
+# 다익스트라: 음의 간선이 없을 때, 시작 노드로부터 모든 노드로 가는 최단 경로 계산
+import heapq
+
+def dijkstra(graph, start):
+    q = []
+    INF = int(1e9)
+    distance = [INF] * (len(graph) + 1)
+    distance[start] = 0
+
+    heapq.heappush(q, (0, start))
+
+    while q:
+        dist, now = heapq.heappop(q)
+
+        if distance[now] < dist:
+            continue
+
+        for nxt, cost in graph[now]:
+            if distance[nxt] > dist + cost:
+                distance[nxt] = dist + cost
+                heapq.heappush(q, (dist + cost, nxt))
+
+    return distance
+
+# 전보: N개의 도시가 통로로 연결돼 있고, 각 통로를 거칠 때는 일정 시간이 소요될 때, 도시 C에서 보낸 정보를 받을 수 있는 도시의 개수와 시간 구하기
+# 도시의 개수 N, 통로의 개수 M, 도시 C (X->Y가 돼도 Y->X가 안 될 수 있음)
+
+import heapq
+
+def solution(N, M, C, graph):
+    q = []
+    INF = int(1e9)
+    distance = [INF] * (N + 1)
+
+    distance[C] = 0
+
+    heapq.heappush(q, (0, C))
+
+    while q:
+        dist, now = heapq.heappop(q)
+
+        if distance[now] < dist:
+            continue
+
+        for i in graph[now]:
+            cost = dist + i[1]
+
+            if cost < distance[i[0]]:
+                distance[i[0]] = cost
+                heapq.heappush(q, (cost, i[0]))
+
+    count = 0
+    time = 0
+    for i in range(1, N + 1):
+        if distance[i] != INF:
+            count += 1
+            time = max(time, distance[i])
+
+    return count - 1, time
+
+print(*solution(3, 2, 1, [[], [(2, 4), (3, 2)], [], []]))
