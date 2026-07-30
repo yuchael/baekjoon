@@ -1,0 +1,23 @@
+# DP
+
+# 효율적인 화폐 구성: N가지 종류의 화폐가 있을 때, 최소한의 개수로 M원이 되도록 하기
+# 2원, 3원 단위의 화폐가 있을 때 15원을 만들기 위해서는 3원 5개 사용이 최소
+
+def solution(money, M):
+    INF = int(1e9)
+    N = len(money)
+    
+    dp = [INF] * (M + 1)
+    dp[0] = 0
+
+    for i in range(1, M + 1):
+        for j in range(N):
+            if money[j] <= i and dp[i - money[j]] != INF:
+                dp[i] = min(dp[i], dp[i-money[j]] + 1)
+
+    if dp[M] == INF:
+        dp[M] = -1
+
+    return dp[M]
+
+print(solution([3, 5, 7], 4))
