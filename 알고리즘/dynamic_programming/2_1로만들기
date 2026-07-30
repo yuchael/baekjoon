@@ -1,0 +1,29 @@
+# DP
+
+# 1로 만들기: 정수 X가 주어졌을 때, 최소한의 연산으로 X를 1로 만들기
+# 가능한 연산: 5로 나누기 / 3으로 나누기 / 2로 나누기 / 1 빼기
+
+def solution(X):
+    dp = [X] * (X + 1)
+
+    dp[1] = 0
+    dp[2] = 1
+    dp[3] = 1
+    dp[4] = 2
+    dp[5] = 1
+
+    for i in range(6, X + 1):
+        if i % 2 == 0:
+            dp[i] = min(dp[i], dp[i // 2] + 1)
+
+        if i % 3 == 0:
+            dp[i] = min(dp[i], dp[i // 3] + 1)
+
+        if i % 5 == 0:
+            dp[i] = min(dp[i], dp[i // 5] + 1)
+
+        dp[i] = min(dp[i], dp[i - 1] + 1)
+
+    return dp[X]
+
+print(solution(26))
