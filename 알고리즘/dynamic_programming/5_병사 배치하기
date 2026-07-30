@@ -1,0 +1,17 @@
+# DP
+
+# 병사 배치하기: N명의 병사가 각자 전투력 값을 가지고 무작위로 나열돼 있을 때, 전투력 내림차순으로 배치하면서도 병사의 수가 최대가 되게 하기
+# N = 7이고 [15, 11, 4, 8, 5, 2, 4]일 때 15, 11, 8, 5, 4로 최대 5명 가능
+
+def solution(arr):
+    N = len(arr)
+    dp = [1] * N
+
+    for i in range(1, N):
+        for j in range(0, i):
+            if arr[i] <= arr[j]:
+                dp[i] = max(dp[i], dp[j] + 1)
+
+    return dp[N - 1]
+
+print(solution([15, 11, 4, 8, 5, 2, 4]))
