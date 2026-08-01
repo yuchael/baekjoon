@@ -1,0 +1,19 @@
+# 특정한 합을 가지는 부분 연속 수열 찾기: N개의 자연수 수열이 있을 때, 합이 M인 부분 연속 수열의 개수 구하기
+# O(N) 이내여야 함
+# {1, 2, 3, 2, 5}, M = 5: {2, 3}, {3, 2}, {5} => 3개
+
+def two_pointer(arr, M):
+    result = 0
+    interval_sum = 0
+    end = 0
+    n = len(arr)
+
+    for start in range(n):
+        while interval_sum < m and end < n:
+            interval_sum += arr[end]
+            end += 1
+        if interval_sum == m:
+            result += 1
+        interval_sum -= arr[start]
+        
+    return result
