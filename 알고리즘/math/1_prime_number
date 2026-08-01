@@ -1,0 +1,24 @@
+# 에라토스테네스의 체: 특정 범위 안의 모든 수에 대해 소수 여부 판별 시 사용
+# 2부터 N까지의 모든 자연수를 나열
+# 남은 수 중에서 아직 처리하지 않은 가장 작은 수 i 찾기
+# 남은 수 중에서 i의 배수 모두 제거
+# 더 이상 반복할 수 없을 때까지 반복
+
+# 시간은 선형 시간에 가깝지만 메모리가 많이 쓰임
+
+import math
+
+def eratostenes(N):
+    is_prime = [True] * (N + 1)
+    sqrt_N = math.sqrt(N)
+
+    for i in range(2, int(sqrt_N) + 1):
+        if is_prime[i] == True:
+            j = 2
+            while i * j <= N:
+                is_prime[i * j] = False
+                j += 1
+
+for i in range(2, n + 1):
+    if is_prime[i]:
+        print(i, end='')
