@@ -1,0 +1,28 @@
+# 구간 합 빠르게 계산하기
+# N개의 정수 수열과 M개의 쿼리(left, rignt 주어지면 해당 구간 모든 수 합 구하기)가 주어질 때, O(N + M) 으로 계산하는 방법
+# 그냥 하면 O(NM). O(N + M)으로 하려면 아래 알고리즘 써야 함.
+
+# prefix_sum: 배열의 맨 앞부터 특정 위치까지의 합을 미리 구해놓기
+# [10, 20, 30, 40, 50] => prefix_sum: P = [0, 10, 30, 60, 100, 150]
+# left = 1, rignt = 3 => P[3] - P[0] = 60
+# left = 2, rignt = 5 => P[5] - P[1] = 140
+
+def prefix_sum(arr, query):
+
+    N = len(arr)
+    M = len(query)
+    
+    pre_sum = [0] * (N + 1)
+    result = []
+
+    for i in range(1, N + 1):
+        pre_sum[i] = pre_sum[i - 1] + arr[i - 1]
+
+    for i in range(M):
+        left = query[i][0]
+        right = query[i][1]
+        result.append(pre_sum[right] - pre_sum[left - 1])
+
+    return result
+
+print(prefix_sum([10, 20, 30, 40, 50], [[1, 3], [2, 5], [3, 4]]))
