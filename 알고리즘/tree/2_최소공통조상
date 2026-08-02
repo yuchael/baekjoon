@@ -1,0 +1,53 @@
+# lowest common ancestor(LCA)
+# 최소공통조상
+
+# N개의 정점으로 이루어진 트리가 있고, 두 노드 쌍 M개가 주어졌을 때, 두 노드의 가장 가까운 공통 조상이 몇 번인지 출력하기
+# 1. 모든 노드에 대한 깊이 계산
+# 2. 최소 공통 조상을 찾을 두 노드 확인
+    # 먼저 두 노드의 깊이가 동일하도록 거슬러 올라가기
+    # 이후에 부모가 같아질 때까지 반복적으로 두 노드의 부모 방향으로 거슬러 올라가기
+# 3. 모든 LCA(a, b) 연산에 대해 2번 과정 반복
+
+import sys
+sys.setrecursionlimit(int(1e5))
+n = int(input())
+
+parent = [0] * (n + 1)
+d = [0] * (n + 1) # 각 노드까지의 깊이
+c = [0] * (n + 1) # 각 노드의 깊이가 계산되었는지 여부
+graph = [[] for _ in range(n + 1)]
+
+for _ in range(n - 1):
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    graph[b].append(a)
+
+def dfs(x, depth):
+    c[x] = True
+    d[x] = depth
+    for y in graph[x]:
+        if c[y]:
+            continue
+        parent[y] = x
+        dfs(y, depth + 1)
+
+def lca(a, b):
+    while d[a] != d[b]:
+        if d[a] > d[b]:
+            a = parent[a]
+        else:
+            b = parent[b]
+
+    while a != b:
+        a = parent[a]
+        b = parent[b]
+
+    return a
+
+dfs(1, 0)
+
+m = int(input())
+
+for i in range(m):
+    a, b = map(int, input().split())
+    print(lca(a, b))
