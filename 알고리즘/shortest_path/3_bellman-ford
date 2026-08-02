@@ -1,0 +1,39 @@
+# shortest_path
+
+# bellman-ford: 음수 간선이 포함된 상황에서의 최단 거리 구하는 알고리즘
+# N개의 도시, M개의 버스가 있고, (A, B, C): (시작도시, 도착도시, 걸리는시간), 걸리는 시간은 정수
+# 1번 도시에서 출발해서 나머지 도시로 가는 가장 빠른 시간 구하기
+# 시간복잡도는 O(VE)로 다익스트라 알고리즘 O(ElogV)보다 느림
+
+# 1. 출발 노드 설정
+# 2. 최단 거리 테이블 초기화
+# 3. 다음 과정 N - 1번 반복
+    # 전체 간선 E개를 하나씩 확인
+    # 각 간선을 거쳐 다른 노드로 가는 비용을 계산하여 최단 거리 테이블 갱신
+# 4. 음수 간선 순환 확인하고 싶으면 3번 과정 한 번 더 수행
+    # 이때 최단 거리 테이블이 갱신되면 음수 간선 순환 존재하는 것.
+ 
+def bellman_ford(N, M, edges):
+    INF = int(1e9)
+    distance = [INF] * (N + 1)
+
+    start = 1
+    distance[start] = 0
+
+    for i in range(N): # 원래 노드 수 N - 1만큼 반복, 추가 1회는 음수 사이클 판별용
+        for j in range(M):
+            cur = edges[j][0]
+            nxt = edges[j][1]
+            cost = edges[j][2]
+
+            dist = distance[cur] + cost
+
+            if distance[cur] != INF and dist < distance[nxt]:
+                distance[nxt] = dist
+
+                if i == N - 1:
+                    return True, None
+                    
+    return False, distance
+
+print(bellman_ford(6, 8, [[1, 2, 8], [1, 3, 10], [2, 5, 1], [3, 6, 2], [4, 3, 1], [5, 3, -4], [5, 6, -1], [6, 4, -2]]))
