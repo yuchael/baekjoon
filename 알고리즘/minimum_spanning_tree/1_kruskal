@@ -38,7 +38,7 @@ def kruskal(v, graph):
             total_cost += cost   
 
             if len(mst) == v - 1:
-            break
+                break
             
     return mst, total_cost   
     
