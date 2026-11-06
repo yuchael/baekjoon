@@ -1,11 +1,14 @@
 SELECT
-        history_id, car_id, 
-        DATE_FORMAT(start_date, "%Y-%m-%d") AS start_date, 
-        DATE_FORMAT(end_date, "%Y-%m-%d") AS end_date, 
-        IF (DATEDIFF(end_date, start_date)+1 >= 30, '장기 대여', '단기 대여') AS rent_type
+        HISTORY_ID, CAR_ID, START_DATE, END_DATE, 
+        CASE
+            WHEN
+                DATEDIFF(END_DATE, START_DATE) + 1 >= 30 THEN'장기 대여'
+            ELSE
+                '단기 대여'
+        END AS RENT_TYPE
 FROM
-        car_rental_company_rental_history
+        CAR_RENTAL_COMPANY_RENTAL_HISTORY
 WHERE
-        start_date LIKE '2022-09-%'
+        START_DATE LIKE '2022-09%'
 ORDER BY
-        history_id DESC;
+        HISTORY_ID DESC
